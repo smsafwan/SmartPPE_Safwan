@@ -23,3 +23,10 @@ add_executable(smart_ppe src/main.cpp)
 # 4. Attach Include Directories & Link Libraries directly to smart_ppe
 target_include_directories(smart_ppe PRIVATE ${OpenCV_INCLUDE_DIRS})
 target_link_libraries(smart_ppe PRIVATE ${OpenCV_LIBS})
+
+
+
+# --- 3. Diagnostics Executable ---
+add_executable(test_env src/test_env.cpp)
+target_include_directories(test_env PRIVATE ${OpenCV_INCLUDE_DIRS})
+target_link_libraries(test_env PRIVATE ${OpenCV_LIBS} onnxruntime)
