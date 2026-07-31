@@ -1,0 +1,13 @@
+train: train/images
+val: valid/images
+test: test/images
+
+nc: 5
+names: ['Bare_Head', 'Hat_Not_OK', 'NO_Safety_vest', 'Safety_vest_OK', 'helmet_OK']
+
+roboflow:
+  workspace: safwan-tariq
+  project: cv-smart-ppe-detection
+  version: 2
+  license: CC BY 4.0
+  url: https://universe.roboflow.com/safwan-tariq/cv-smart-ppe-detection/dataset/2

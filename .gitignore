@@ -67,3 +67,8 @@ vcpkg_installed/
 # test output & cache
 Testing/
 .cache/
+
+# Ignore a whole folder containing your data
+dataset/
+data/
+external/
