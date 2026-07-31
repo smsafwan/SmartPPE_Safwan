@@ -69,6 +69,6 @@ Testing/
 .cache/
 
 # Ignore a whole folder containing your data
-dataset/
+datasets/
 data/
 external/
