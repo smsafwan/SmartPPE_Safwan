@@ -2,24 +2,25 @@ import os
 from ultralytics import RTDETR
 
 def main():
-    print("========================================")
-    print("   Starting RT-DETR Training Pipeline   ")
-    print("========================================\n")
+    print("===========================================")
+    print("  RT-DETR Front-View & Resolution Pipeline ")
+    print("===========================================\n")
 
-    # Load base RT-DETR architecture
     model = RTDETR('rtdetr-l.pt') 
 
-    # Train model optimized for 6GB VRAM & Windows
     results = model.train(
         data='datasets/ppe_dataset/data.yaml', 
-        epochs=30,                             
-        imgsz=640,                             
-        batch=2,                               
-        workers=2,
-        cache=True,                            # Caches images in RAM for 100% GPU saturation
+        epochs=40,                             
+        imgsz=800,                             # High resolution to capture front-facing texture
+        batch=2,                               # Reduced to 1 to fit 800x800 inside 6GB VRAM
+        workers=2,                             
+        cache=True,                            
         device=0,                              
+        
+     
+        
         project='ppe_training_results',
-        name='rtdetr_custom_ppe'
+        name='rtdetr_frontview_800px'
     )
 
     print("\nTraining complete!")
