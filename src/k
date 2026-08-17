@@ -1,0 +1,24 @@
+import cv2
+from ultralytics import RTDETR
+
+def run_live_tracking():
+    # Load your balanced model
+    model = RTDETR('C:/Users/hsmsa/runs/detect/runs/detect/retrain_balanced/rtdetr_ppe_balanced_v2/weights/best.pt')
+
+    # Source: '0' for webcam, or put the path to a video file like 'test_video.mp4'
+    video_source = 0 
+
+    # Run the tracker
+    # persist=True keeps IDs stable across frames
+    # tracker='bytetrack.yaml' is highly optimized for fast movement
+    results = model.track(
+        source=video_source,
+        conf=0.45,             # Lowered slightly: The tracker will filter out random noise
+        iou=0.50,
+        show=True,             # Opens a live video window
+        tracker="bytetrack.yaml",
+        persist=True
+    )
+
+if __name__ == '__main__':
+    run_live_tracking()

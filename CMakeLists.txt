@@ -8,25 +8,31 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(OpenCV_DIR "C:/opencv/build/x64/vc16/lib")
 find_package(OpenCV REQUIRED)
 
-# 2. Define ONNX Runtime Paths
-set(ORT_ROOT "${CMAKE_SOURCE_DIR}/external/onnxruntime")
-add_library(onnxruntime SHARED IMPORTED)
-set_target_properties(onnxruntime PROPERTIES
-    IMPORTED_LOCATION "${ORT_ROOT}/lib/onnxruntime.dll"
-    IMPORTED_IMPLIB "${ORT_ROOT}/lib/onnxruntime.lib"
-    INTERFACE_INCLUDE_DIRECTORIES "${ORT_ROOT}/include"
+# --------------------------------------------------------------------
+# 2. Configure ONNX Runtime Path (UPDATE THIS TO YOUR ACTUAL PATH)
+# --------------------------------------------------------------------
+set(ONNXRUNTIME_DIR "C:/onnxruntime" CACHE PATH "Path to ONNX Runtime")
+
+include_directories(
+    ${OpenCV_INCLUDE_DIRS}
+    ${ONNXRUNTIME_DIR}/include
 )
 
-# 3. Compile the Executable
-add_executable(smart_ppe src/main.cpp)
+link_directories(
+    ${ONNXRUNTIME_DIR}/lib
+)
 
-# 4. Attach Include Directories & Link Libraries directly to smart_ppe
-target_include_directories(smart_ppe PRIVATE ${OpenCV_INCLUDE_DIRS})
-target_link_libraries(smart_ppe PRIVATE ${OpenCV_LIBS})
+# --------------------------------------------------------------------
+# 3. Define Executable
+# --------------------------------------------------------------------
+add_executable(SmartPPE_App
+    src/main.cpp
+)
 
-
-
-# --- 3. Diagnostics Executable ---
-add_executable(test_env src/test_env.cpp)
-target_include_directories(test_env PRIVATE ${OpenCV_INCLUDE_DIRS})
-target_link_libraries(test_env PRIVATE ${OpenCV_LIBS} onnxruntime)
+# --------------------------------------------------------------------
+# 4. Link Libraries
+# --------------------------------------------------------------------
+target_link_libraries(SmartPPE_App PRIVATE 
+    ${OpenCV_LIBS}
+    onnxruntime
+)

@@ -5,24 +5,25 @@ from ultralytics import RTDETR
 # ====================================================================
 # CONFIGURATION & THRESHOLDS
 # ====================================================================
-MODEL_PATH = 'C:/Users/hsmsa/runs/detect/ppe_training_results/rtdetr_frontview_800px-2/weights/best.pt'
+MODEL_PATH = 'C:/Users/hsmsa/runs/detect/runs/detect/retrain_balanced/rtdetr_ppe_balanced_v2/weights/best.pt'
+MODEL_NAMES = ['Bare_Head', 'No_Safety_vest', 'Non_Compliant_Hat', 'Safety_vest_OK', 'helmet_OK']
 
-# BGR Colors: 0:Bare_Head, 1:Hat_Not_OK, 2:NO_Safety_vest, 3:Safety_vest_OK, 4:helmet_OK
+# BGR Colors: 0:Bare_Head, 1:No_Safety_vest, 2:Non_Compliant_Hat, 3:Safety_vest, 4:helmet
 COLORS = {
     0: (0, 0, 255),    # Bare_Head -> RED
-    1: (0, 165, 255),  # Hat_Not_OK -> ORANGE
-    2: (0, 0, 255),    # NO_Safety_vest -> RED
-    3: (0, 255, 0),    # Safety_vest_OK -> GREEN
-    4: (0, 255, 0)     # helmet_OK -> GREEN
+    1: (0, 165, 255),  # No_Safety_vest-> ORANGE
+    2: (0, 0, 255),    # Non_Compliant_Hat  -> RED
+    3: (0, 255, 0),    # Safety_vest -> GREEN
+    4: (0, 255, 0)     # helmet -> GREEN
 }
 
 # Calibrated Thresholds: Strict cutoffs to kill background noise
 CLASS_THRESHOLDS = {
     0: 0.55,  # Bare_Head
-    1: 0.50,  # Hat_Not_OK (Raised from 0.35 to stop truck hallucinations)
-    2: 0.55,  # NO_Safety_vest
-    3: 0.55,  # Safety_vest_OK
-    4: 0.55   # helmet_OK
+    1: 0.35,  # No_Safety_vest (Raised from 0.35 to stop truck hallucinations)
+    2: 0.55,  # Non_Compliant_Hat 
+    3: 0.55,  # Safety_vest
+    4: 0.55   # helmet
 }
 
 def get_youtube_url(url):
@@ -123,4 +124,4 @@ if __name__ == '__main__':
     # "datasets/simulation_video.mp4"           -> Local Video
     # "https://www.youtube.com/watch?v=..."     -> YouTube Stream
 
-    run_detection("https://www.youtube.com/watch?v=7M8_pZborlw")  # Change 0 to your image path or video URL
+    run_detection(0)  # Change 0 to your image path or video URL
