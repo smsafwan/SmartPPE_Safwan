@@ -2,29 +2,31 @@ from ultralytics import RTDETR
 
 def run_finetuning():
     print("===========================================")
-    print("   Fine-Tuning RT-DETR on Updated Dataset  ")
+    print("   Retraining RT-DETR on Updated Dataset  ")
     print("===========================================\n")
 
-    # Load your EXISTING trained weights instead of baseline weights
-    # This acts as the starting point for fine-tuning
-    model_path = 'C:/Users/hsmsa/runs/detect/ppe_training_results/rtdetr_frontview_800px-2/weights/best.pt'
-    model = RTDETR(model_path)
 
-    # Train for 20-30 epochs to adjust bounding box regression
-    results = model.train(
-        data='datasets/ppe_dataset/data.yaml',
-        epochs=25,             # 20-30 epochs is sufficient for box recalibration
-        imgsz=800,            # Keep your 800x800 resolution
-        batch=2,              # Adjust batch size based on GPU VRAM
+def run_4class_retraining():
+    # Try using your best 5-class weights first
+    model = RTDETR('C:/Users/hsmsa/runs/detect/runs/detect/retrain_balanced/rtdetr_ppe_balanced_v2/weights/best.pt')
+
+    model.train(
+        data='datasets/retrain_03_09/data.yaml', # <--- Point to the 4-class yaml
+        epochs=30,
+        imgsz=600,
+        batch=4,
         workers=2,
-        device=0,
-        project='runs/detect/ppe_training_results',
-        name='rtdetr_custom_ppe_finetuned',
-        exist_ok=True
+        
+        # Robust augmentations for low-light/close-ups
+        hsv_h=0.015,
+        hsv_s=0.7,
+        hsv_v=0.7,
+        scale=0.8,
+        mosaic=1.0,
+        
+        project='runs/detect/retrain',
+        name='rtdetr_ppe_v3'
     )
 
-    print("\n[INFO] Fine-tuning completed successfully!")
-    print(f"[INFO] New weights saved to: {results.save_dir}/weights/best.pt")
-
 if __name__ == '__main__':
-    run_finetuning()
+    run_4class_retraining()

@@ -6,12 +6,12 @@ def run_evaluation():
     print("===========================================\n")
 
     # Load your trained PyTorch weights
-    model_path = 'C:/Users/hsmsa/runs/detect/runs/detect/retrain_balanced/rtdetr_ppe_balanced_v2/weights/best.pt'
+    model_path = 'C:/Users/hsmsa/runs/detect/runs/detect/retrain/rtdetr_ppe_v3-3/weights/best.pt'
     model = RTDETR(model_path)
 
     # Run validation on your validation/test split
     metrics = model.val(
-        data='datasets/ppe_valid_consolidated/data.yaml',
+        data='datasets/ppe_evaluation_unified/data.yaml',
         split='val',          # Evaluates on the 'val' split defined in data.yaml
         batch=2,              # Single batch size for standard evaluation
         conf=0.55,            # Standard benchmark confidence threshold (PASCAL VOC / COCO standard)
