@@ -7,7 +7,7 @@ def run_finetuning():
 
 
 def run_4class_retraining():
-    # Try using your best 5-class weights first
+    
     model = RTDETR('C:/Users/hsmsa/runs/detect/runs/detect/retrain_balanced/rtdetr_ppe_balanced_v2/weights/best.pt')
 
     model.train(

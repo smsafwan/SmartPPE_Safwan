@@ -11,8 +11,8 @@ def main():
     results = model.train(
         data='datasets/ppe_dataset/data.yaml', 
         epochs=40,                             
-        imgsz=800,                             # High resolution to capture front-facing texture
-        hsv_h=0.0,  # CRITICAL: Do not randomly change colors during training
+        imgsz=640,                             # High resolution to capture front-facing texture
+        hsv_h=0.0,  
         batch=2,                               # Reduced to 1 to fit 800x800 inside 6GB VRAM
         workers=2,                             
         cache=True,                            

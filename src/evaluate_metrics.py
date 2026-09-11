@@ -1,25 +1,28 @@
 from ultralytics import RTDETR
+import os
 
 def run_evaluation():
     print("===========================================")
     print("    Running Quantitative Evaluation       ")
     print("===========================================\n")
 
-    # Load your trained PyTorch weights
-    model_path = 'C:/Users/hsmsa/runs/detect/runs/detect/retrain/rtdetr_ppe_v3-3/weights/best.pt'
+    # Load trained PyTorch weights
+    model_path = 'weights/best.pt'
     model = RTDETR(model_path)
 
-    # Run validation on your validation/test split
+    # Run validation on validation/test split
     metrics = model.val(
-        data='datasets/ppe_evaluation_unified/data.yaml',
-        split='val',          # Evaluates on the 'val' split defined in data.yaml
+        data='datasets/Custom_Eval/data.yaml',
+        split='test',          # Evaluates on the 'val' split defined in data.yaml
+        imgsz=800,       # Standard input resolution
         batch=2,              # Single batch size for standard evaluation
         conf=0.55,            # Standard benchmark confidence threshold (PASCAL VOC / COCO standard)
         iou=0.60,             # NMS IoU threshold
         device=0,
+        workers=0,
         augment=True,
-        project='ppe_eval_results',
-        name='baseline_metrics_new'
+        project='custom_eval_results',
+        name='metrics_new_baseline'
     )
 
     print("\n================ SYSTEM METRICS SUMMARY ================")

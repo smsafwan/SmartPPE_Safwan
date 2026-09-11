@@ -5,7 +5,7 @@ from ultralytics import RTDETR
 # ====================================================================
 # CONFIGURATION & THRESHOLDS
 # ====================================================================
-MODEL_PATH = 'C:/Users/hsmsa/runs/detect/runs/detect/retrain_balanced/rtdetr_ppe_balanced_v2/weights/best.pt'
+MODEL_PATH = 'weights/best.pt'
 MODEL_NAMES = ['Bare_Head', 'No_Safety_vest', 'Non_Compliant_Hat', 'Safety_vest_OK', 'helmet_OK']
 
 # BGR Colors: 0:Bare_Head, 1:No_Safety_vest, 2:Non_Compliant_Hat, 3:Safety_vest, 4:helmet
@@ -124,4 +124,4 @@ if __name__ == '__main__':
     # "datasets/simulation_video.mp4"           -> Local Video
     # "https://www.youtube.com/watch?v=..."     -> YouTube Stream
 
-    run_detection(0)  # Change 0 to your image path or video URL
+    run_detection('assets/sample-non-compliant-3.jpg')  # Change 0 to image path or video URL

@@ -1,38 +1,33 @@
-cmake_minimum_required(VERSION 3.15)
+cmake_minimum_required(VERSION 3.16)
 project(SmartPPE_Safwan_DeSilva CXX)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-# 1. Point directly to your OpenCV installation (Verify if E: or C:)
+# ==============================================================================
+# 1. SET PATHS TO YOUR LOCAL INSTALLATIONS (Update these if paths differ)
+# ==============================================================================
+# Path to your OpenCV build folder (where OpenCVConfig.cmake resides)
 set(OpenCV_DIR "C:/opencv/build/x64/vc16/lib")
+
+# Path to your ONNX Runtime C++ release folder (unzipped)
+set(ONNXRUNTIME_DIR "C:/onnxruntime") 
+# ==============================================================================
+
+# Locate OpenCV
 find_package(OpenCV REQUIRED)
 
-# --------------------------------------------------------------------
-# 2. Configure ONNX Runtime Path (UPDATE THIS TO YOUR ACTUAL PATH)
-# --------------------------------------------------------------------
-set(ONNXRUNTIME_DIR "C:/onnxruntime" CACHE PATH "Path to ONNX Runtime")
-
+# Include Directories
 include_directories(
     ${OpenCV_INCLUDE_DIRS}
     ${ONNXRUNTIME_DIR}/include
 )
 
-link_directories(
-    ${ONNXRUNTIME_DIR}/lib
-)
+# Executable target
+add_executable(SmartPPE src/main.cpp)
 
-# --------------------------------------------------------------------
-# 3. Define Executable
-# --------------------------------------------------------------------
-add_executable(SmartPPE_App
-    src/main.cpp
-)
-
-# --------------------------------------------------------------------
-# 4. Link Libraries
-# --------------------------------------------------------------------
-target_link_libraries(SmartPPE_App PRIVATE 
+# Link Libraries
+target_link_libraries(SmartPPE
     ${OpenCV_LIBS}
-    onnxruntime
+    ${ONNXRUNTIME_DIR}/lib/onnxruntime.lib
 )
